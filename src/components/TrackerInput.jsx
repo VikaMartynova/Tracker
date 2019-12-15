@@ -9,6 +9,12 @@ class TrackerInput extends Component {
         index: 0
     };
 
+    componentDidMount() {
+        const existedTrackers = JSON.parse(localStorage.getItem('trackers') || '[]');
+        let maxIndex =  existedTrackers.map(tr => tr.index).sort((a, b) => !(b - a))[0];
+        this.setState({index: ++maxIndex || 0});
+    };
+
     handleNameChange = (event) => {
         this.setState({name: event.target.value});
     };

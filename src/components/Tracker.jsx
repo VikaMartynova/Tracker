@@ -12,7 +12,7 @@ class Tracker extends Component {
     };
 
     componentDidMount() {
-        this.startTimer();
+        this.manageTimer();
     }
 
     startTimer = () => {
@@ -25,7 +25,7 @@ class Tracker extends Component {
     };
     manageTimer = () => {
         const pauseState = this.state.tracker.pause;
-      if (pauseState) {
+      if (!pauseState) {
           this.startTimer();
       } else {
           this.stopTimer();
@@ -47,13 +47,21 @@ class Tracker extends Component {
         this.props.removeTracker(this.state.tracker.index);
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state !== prevState) {
+            const {tracker, time} = this.state;
+            const newTracker = Object.assign({}, tracker, {time: time, pause: tracker.pause});
+            this.props.updateList(newTracker);
+        }
+    }
+
     render () {
         const {tracker, time} = this.state;
-        return <div className={'item ' + (!tracker.pause ? 'active' : '')}>
+        return <div className={'item ' + (tracker.pause ? 'active' : '')}>
             <span>{tracker.name}</span>
             <div>
                 <span>{this.displayTime(time)}</span>
-                {tracker.pause ?
+                {!tracker.pause ?
                     <PlayCircleOutlineIcon onClick={this.manageTimer}/>
                     : <PauseCircleOutlineIcon onClick={this.manageTimer}/>
                 }
