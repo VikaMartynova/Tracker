@@ -11,7 +11,7 @@ class WebPage extends Component {
 
     addTracker = (newTracker) => {
         let trackers = this.state.trackers;
-        trackers.push(newTracker);
+        trackers.unshift(newTracker);
         this.setState({trackers: trackers});
     };
 
@@ -20,7 +20,7 @@ class WebPage extends Component {
     };
 
     render() {
-        return <div>
+        return <div className='container'>
             <h1>tracker</h1>
             <TrackerInput addTracker={this.addTracker} />
             <TrackerList trackers={this.state.trackers} removeTracker={this.removeTracker}/>

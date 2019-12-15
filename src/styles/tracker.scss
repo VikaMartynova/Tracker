@@ -1,0 +1,32 @@
+@mixin flex {
+  display: flex;
+  align-items: center;
+}
+
+ul {
+  margin: 10px auto;
+  width: 100%;
+  li {
+    @include flex;
+    height: 60px;
+    border-bottom: 1px solid #cccccc;
+    &:first-child {
+      border-top: 1px solid #cccccc;
+    }
+    .item {
+      @include flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 7px 0 22px;
+      font-size: 17px;
+      & > div {
+        @include flex;
+        justify-content: space-around;
+        width: 120px;
+      }
+    }
+    .active {
+      color: #3FAF6C;
+    }
+  }
+}

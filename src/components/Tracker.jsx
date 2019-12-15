@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import moment from 'moment';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 class Tracker extends Component {
 
@@ -31,9 +35,10 @@ class Tracker extends Component {
     };
 
     displayTime(seconds) {
-        const hrs = Math.floor(seconds / (60*60));
-        const min = Math.floor((seconds / (60*60) - hrs) * 60);
-        const sec = Math.floor(((seconds/ (60*60) - hrs) * 60 - min) * 60);
+        const duration = moment.duration(seconds * 1000);
+        const sec = duration.seconds();
+        const min = duration.minutes();
+        const hrs = duration.hours();
         return (hrs < 10 ? `0${hrs}`: `${hrs}`) + ':' + (min < 10 ? `0${min}`: `${min}`) + ':' + (sec < 10 ? `0${sec}`: `${sec}`);
     }
 
@@ -44,11 +49,16 @@ class Tracker extends Component {
 
     render () {
         const {tracker, time} = this.state;
-        return <div>
-            <span>{tracker.name || `name tracker ${tracker.index}`}</span>
-            <span>{this.displayTime(time)}</span>
-            <button className={'btn ' + (tracker.pause ? 'btn-pause' : 'btn-play')} onClick={this.manageTimer}>{this.state.tracker.pause ? 'Start' : 'Pause'}</button>
-            <button className="btn-remove" onClick={this.removeTracker}>Remove</button>
+        return <div className={'item ' + (!tracker.pause ? 'active' : '')}>
+            <span>{tracker.name}</span>
+            <div>
+                <span>{this.displayTime(time)}</span>
+                {tracker.pause ?
+                    <PlayCircleOutlineIcon onClick={this.manageTimer}/>
+                    : <PauseCircleOutlineIcon onClick={this.manageTimer}/>
+                }
+                <RemoveCircleOutlineIcon style={{color: '#D2697A'}} onClick={this.removeTracker}/>
+            </div>
         </div>
     }
 }

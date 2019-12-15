@@ -1,0 +1,20 @@
+* {
+ list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  font-family: "Myriad Pro";
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  max-width: 560px;
+  width: 90%;
+  h1 {
+    font-size: 48px;
+    margin-bottom: 44px;
+  }
+}
